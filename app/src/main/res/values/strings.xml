@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">RestAPI</string>
+    <string name="textview">TextView</string>
+    <string name="tittle">tittletittle</string>
+    <string name="body_et">body_et</string>
+    <string name="userEt">userEt</string>
+    <string name="send_btn">send_btn</string>
+    <string name="ingresa_el_titulo">Ingresa el Titulo</string>
+</resources>
