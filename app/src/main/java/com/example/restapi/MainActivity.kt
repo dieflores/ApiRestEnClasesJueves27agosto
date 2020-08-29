@@ -1,3 +1,5 @@
+package com.example.restapi
+
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
@@ -6,8 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.restapi.PostAdapter
-import com.example.restapi.R
 import com.example.restapi.model.pojo.Post
 import com.example.restapi.model.remote.RetrofitClient
 import com.example.restapi.model.viewmodel.PostViewModel
@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewAdapter: PostAdapter
     private lateinit var mViewModel: PostViewModel
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         postsRecyclerView.adapter = viewAdapter
 
         //Boton fab añadir un nuevo post
-        addpost.setOnClickListener {
+        addPost.setOnClickListener {
             showDialog()
         }
 
@@ -102,4 +103,6 @@ class MainActivity : AppCompatActivity() {
         }
         dialog.show()
     }
+
+
 }

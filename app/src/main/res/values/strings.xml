@@ -6,4 +6,5 @@
     <string name="userEt">userEt</string>
     <string name="send_btn">send_btn</string>
     <string name="ingresa_el_titulo">Ingresa el Titulo</string>
+    <string name="ENVIAR">ENVIAR</string>
 </resources>
