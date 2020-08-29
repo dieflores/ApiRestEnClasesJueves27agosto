@@ -19,7 +19,7 @@ class PostRepository(context: Context) {
     private val tag = "PostRepository"
     //esto viene de la base de datos
     private val dataB: RoomDataBasePost = RoomDataBasePost.getDatabase(context)
-    private val postList: LiveData<List<Post>> = dataB.getPostDao().getAllPostList()
+    private val postList = dataB.getPostDao().getAllPostList()
 
     fun passLiveDataToViewModel(): LiveData<List<Post>>{
         return postList
@@ -31,13 +31,14 @@ class PostRepository(context: Context) {
 
         call.enqueue(object : Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
-
+                Log.d(tag,response.body().toString())
                 CoroutineScope(Dispatchers.IO).launch{
                     response.body()?.let{dataB.getPostDao().insertAllPost(it)}
                 }
             }
 
             override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                Log.d(tag,t.message.toString())
 
             }
 

@@ -7,8 +7,6 @@ import androidx.room.RoomDatabase
 
 
 @Database(entities = [PostDao::class], version = 1, exportSchema = false)
-
-
 abstract class RoomDataBasePost : RoomDatabase() {
 
     abstract fun getPostDao(): PostDao
@@ -37,7 +35,7 @@ abstract class RoomDataBasePost : RoomDatabase() {
 }
 
 
-// otra formula para lo mismo con menos pasos
+// otra formula para lo mismo
 
 // fun getDatabase(context: Context):PhotoDataRoomBase{
 //            if(INSTANCE == null)

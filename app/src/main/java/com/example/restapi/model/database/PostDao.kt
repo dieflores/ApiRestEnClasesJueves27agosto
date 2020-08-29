@@ -1,8 +1,11 @@
 package com.example.restapi.model.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
 import com.example.restapi.model.pojo.Post
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
 interface PostDao {

@@ -1,5 +1,3 @@
-package com.example.restapi
-
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
+import com.example.restapi.PostAdapter
+import com.example.restapi.R
 import com.example.restapi.model.pojo.Post
 import com.example.restapi.model.remote.RetrofitClient
 import com.example.restapi.model.viewmodel.PostViewModel
@@ -27,29 +26,44 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // INICIANDO VIEW MODEL
+        //Iniciando el ViewModel
         mViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
-
-        // INICIANDO ADAPTER
+        // Iniciando el adapter
         viewAdapter = PostAdapter(postsList)
         postsRecyclerView.adapter = viewAdapter
 
-        // BOTON FAB AÑADIR NUEVO POST
+        //Boton fab añadir un nuevo post
         addpost.setOnClickListener {
             showDialog()
         }
 
-        mViewModel.fetchFromServer()
-        mViewModel.getDataFromDataB().observe(this, Observer { viewAdapter.upDateData(it) })
+        // mViewModel.fetchFromServer()
+        mViewModel.getDataFromDataB().observe(this, Observer {
+            viewAdapter.upDateData(it)
+        })
 
     }
 
 
+    private fun delete() {
+        val service = RetrofitClient.retrofitInstance()
+        val call = service.deletePost(1)
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                Log.d("DELETE", response.code().toString())
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d("ERROR", t.message.toString())
+            }
+
+        })
+    }
 
     private fun makePost(post: Post) {
         val service = RetrofitClient.retrofitInstance()
         val call = service.createNewPost(post)
-        call.enqueue((object : Callback<Post> {
+        call.enqueue(object : Callback<Post> {
             override fun onResponse(call: Call<Post>, response: Response<Post>) {
                 when (response.code()) {
                     in 200..299 -> {
@@ -57,15 +71,20 @@ class MainActivity : AppCompatActivity() {
                             this@MainActivity, "Post Realizado", Toast.LENGTH_SHORT
                         ).show()
                     }
+                    else -> {
+                        Toast.makeText(
+                            this@MainActivity, "Algo ocurrio, Post no creado", Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
 
             override fun onFailure(call: Call<Post>, t: Throwable) {
                 Log.d("MAIN", t.message.toString())
-
             }
-        }))
+        })
     }
+
 
     private fun showDialog() {
         val dialog = Dialog(this)
@@ -77,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             val title = dialog.titleEt.text.toString()
             val body = dialog.bodyEt.text.toString()
             val userId = dialog.userIDET.text.toString().toLong()
-            val post = Post(userId.toLong(), 100, title, body)
+            val post = Post(userId, 100, title, body)
             makePost(post)
             dialog.dismiss()
         }

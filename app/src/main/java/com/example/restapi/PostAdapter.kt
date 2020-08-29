@@ -1,5 +1,6 @@
 package com.example.restapi
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ class PostAdapter(var myDataset: List<Post>) : RecyclerView.Adapter<PostAdapter.
 
     //
     fun upDateData(listPost: List<Post>){
+        Log.d("UPDATE","update ${listPost.size}")
         myDataset = listPost
         notifyDataSetChanged()
 

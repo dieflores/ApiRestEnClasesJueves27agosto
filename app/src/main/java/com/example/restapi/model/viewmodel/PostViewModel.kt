@@ -9,7 +9,7 @@ import com.example.restapi.model.pojo.Post
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = PostRepository(application)
-    private val postList:LiveData<List<Post>> = repository.passLiveDataToViewModel()
+    private val postList = repository.passLiveDataToViewModel()
 
      fun fetchFromServer(){
         repository.fetchDataFromServer()
